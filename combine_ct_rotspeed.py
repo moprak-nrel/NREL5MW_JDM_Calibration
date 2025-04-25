@@ -9,6 +9,11 @@ Ct_df.set_index("WindSpeed", inplace=True)
 RotSpeed_df = pd.read_csv("./RotSpeeds.csv", index_col="WindSpeed")
 combined_df = Ct_df.join(RotSpeed_df, how="outer", sort=True).interpolate("cubic")
 
+# Zero padding for cut-in and cut-out speeds
+for loc in [0.0, 2.9, 25.1, 50]:
+    combined_df.loc[loc] = [0, 0]
+combined_df.sort_index(inplace=True)
+
 fig, axs = plt.subplots(nrows=2, sharex=True)
 axs[0].plot(Ct_df.index, Ct_df.Ct, label="Original", color="k")
 axs[0].plot(combined_df.index, combined_df.Ct, label="Interpolated", ls="dotted")
