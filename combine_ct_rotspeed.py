@@ -71,6 +71,7 @@ def write_turbine_yaml():
     with open("test.yaml", "w") as yf:
         yaml = YAML(typ="safe")
         yaml.default_flow_style = False
+        yaml.width = 1e6
         yaml.dump(yaml_data, yf)
 
 
