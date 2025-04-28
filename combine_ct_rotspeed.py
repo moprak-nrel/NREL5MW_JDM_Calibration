@@ -47,28 +47,33 @@ def get_ct_rotspeed(plot_interpolation=False):
 def write_turbine_yaml():
     ct_rotspeed_df = get_ct_rotspeed()
     yaml_data = {
-        "JDM_5MW": {
-            "Actuator_type": "JoukowskyDisk",
-            "Actuator_rotor_diameter": 126,
-            "Actuator_hub_height": 90,
-            "Actuator_diameters_to_sample": 2.5,
-            "Actuator_epsilon": [5.0, 5.0, 5.0],
-            "Actuator_num_points_r": 40,
-            "Actuator_num_points_t": 5,
-            "Actuator_vortex_core_size": 24.0,
-            "Actuator_use_tip_correction": True,
-            "Actuator_use_root_correction": True,
-            "Actuator_num_blades": 3,
-            "Actuator_wind_speed": " ".join(
-                [f"{v}" for v in list(ct_rotspeed_df.index)]
-            ),
-            "Actuator_rpm": " ".join([f"{v}" for v in list(ct_rotspeed_df.RotSpeed)]),
-            "Actuator_thrust_coeff": " ".join(
-                [f"{v}" for v in list(ct_rotspeed_df.Ct)]
-            ),
+        "turbines": {
+            "JDM_5MW": {
+                "turbinetype_name": "JDM_5MW",
+                "Actuator_type": "JoukowskyDisk",
+                "Actuator_rotor_diameter": 126,
+                "Actuator_hub_height": 90,
+                "Actuator_diameters_to_sample": 2.5,
+                "Actuator_epsilon": [5.0, 5.0, 5.0],
+                "Actuator_num_points_r": 40,
+                "Actuator_num_points_t": 5,
+                "Actuator_vortex_core_size": 24.0,
+                "Actuator_use_tip_correction": True,
+                "Actuator_use_root_correction": True,
+                "Actuator_num_blades": 3,
+                "Actuator_wind_speed": " ".join(
+                    [f"{v}" for v in list(ct_rotspeed_df.index)]
+                ),
+                "Actuator_rpm": " ".join(
+                    [f"{v}" for v in list(ct_rotspeed_df.RotSpeed)]
+                ),
+                "Actuator_thrust_coeff": " ".join(
+                    [f"{v}" for v in list(ct_rotspeed_df.Ct)]
+                ),
+            }
         }
     }
-    with open("test.yaml", "w") as yf:
+    with open("nrel5mw_jdm.yaml", "w") as yf:
         yaml = YAML(typ="safe")
         yaml.default_flow_style = False
         yaml.width = 1e6
